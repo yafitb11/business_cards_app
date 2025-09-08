@@ -1,0 +1,45 @@
+{
+    // לא לסרוק תיקיות כבדות
+    "files.exclude": {
+        "**/node_modules": true,
+        "**/dist": true,
+        "**/build": true,
+        "**/coverage": true,
+        "**/.next": true,
+        "**/.turbo": true
+    },
+    "search.exclude": {
+        "**/node_modules": true,
+        "**/dist": true,
+        "**/build": true,
+        "**/coverage": true,
+        "**/.next": true,
+        "**/.turbo": true
+    },
+    // הצעות IntelliSense - לשמור רק מה שבאמת שימושי
+    "editor.suggest.showKeywords": true,
+    "editor.suggest.showFunctions": true,
+    "editor.suggest.showMethods": true,
+    "editor.suggest.showProperties": true,
+    "editor.suggest.showFields": true,
+    // לצמצם רעש לא רלוונטי
+    "editor.suggest.showModules": false,
+    "editor.suggest.showSnippets": false,
+    "editor.suggest.showVariables": false,
+    "editor.suggest.showUsers": false,
+    // שיפור ביצועים ב-TypeScript/JS
+    "typescript.tsserver.maxTsServerMemory": 4096,
+    "javascript.suggest.autoImports": true,
+    "typescript.suggest.autoImports": true,
+    // להתמקד בקוד בפרויקט עצמו
+    "javascript.suggest.paths": true,
+    "typescript.suggest.paths": true,
+    // להסתיר קבצי junk בעץ הקבצים
+    "files.watcherExclude": {
+        "**/node_modules/**": true,
+        "**/dist/**": true,
+        "**/build/**": true,
+        "**/coverage/**": true,
+        "**/.git/**": true
+    }
+}
