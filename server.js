@@ -37,6 +37,6 @@ const port = config.get("PORT");
 app.listen(port, () => {
     console.log(chalk.yellow(`I'm listening to ${port}`));
     connectToDb();
-    //generateInitialCards();
-    //generateInitialUsers();
+    generateInitialCards();
+    generateInitialUsers();
 })
