@@ -72,10 +72,10 @@ exports.login = async (emailAndPassword) => {
     return Promise.resolve("login user not in MONGODB");
 };
 
-exports.update = async (userId, normalizeUser) => {
+exports.update = async (userId, normalizedUser) => {
     if (DB === "MONGODB") {
         try {
-            const updatedUser = await User.findByIdAndUpdate(userId, normalizeUser, { new: true }).select("-password -__v");
+            const updatedUser = await User.findByIdAndUpdate(userId, normalizedUser, { new: true }).select("-password -__v");
             if (!updatedUser) { throw new Error("Could not update this user because a user with this ID couldn't be found in database"); }
             return Promise.resolve(`updated user: ${updatedUser}`);
         } catch (error) {
