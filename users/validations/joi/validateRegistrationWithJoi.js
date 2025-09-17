@@ -29,7 +29,7 @@ const validateRegistrationWithJoi = (user) => {
             houseNumber: joi.number().greater(0).required(),
             zip: joi.number().min(1000).allow(0),
         })
-    });
+    }).unknown(false);
 
     return schema.validate(user);
 

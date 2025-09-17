@@ -59,7 +59,6 @@ exports.updateUser = async (userId, rawUser) => {
             return Promise.reject(error);
         }
         let user = { ...rawUser };
-        //צריך נורמליז אפדייט יוזר  user = normalizeUser(user);
         user = await update(userId, user);
         return Promise.resolve(user);
     } catch (error) {

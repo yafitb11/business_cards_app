@@ -62,17 +62,6 @@ router.put("/:id", async (req, res) => {
         errorhandler(res, error.status || 500, error.message);
     }
 });
-/*
-router.patch("/:id", async (req, res) => {
-    try {
-        const id = req.params.id;
-        const user = await patchUser(id, req.body);
-        res.send(user);
-    } catch (error) {
-        errorhandler(res, error.status || 500, error.message);
-    }
-});
-*/
 
 router.patch("/:id", async (req, res) => {
     try {
