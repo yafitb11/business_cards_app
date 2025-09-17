@@ -21,11 +21,15 @@ app.use(router);
 app.use((req, res, next) => {
     const filePath = path.join(__dirname, "public", "pageNotFound.html");
     res.status(404).sendFile(filePath, (err) => {
-        if (err) { next(err); }
+        if (err) {
+            next(err);
+        }
     });
 });
 
 app.use((err, req, res, next) => {
+    console.log("Error middleware triggered with error:", err);
+    console.log("errorhandler type:", typeof errorhandler);
     errorhandler(res, err.status || 500, err.message);
 })
 
@@ -33,6 +37,6 @@ const port = config.get("PORT");
 app.listen(port, () => {
     console.log(chalk.yellow(`I'm listening to ${port}`));
     connectToDb();
-    generateInitialCards();
-    generateInitialUsers();
+    //generateInitialCards();
+    //generateInitialUsers();
 })
