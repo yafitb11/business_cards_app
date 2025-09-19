@@ -39,7 +39,7 @@ const validateCardWithJoi = (card) => {
         }),
         bizNumber: Joi.number().allow(""),
         user_id: Joi.string().allow(""),
-    });
+    }).unknown(false);
 
     return schema.validate(card);
 };

@@ -1,5 +1,5 @@
 const validateCardWithJoi = require("./joi/validateCardWithJoi");
-const validateCardWithJoi = require("./joi/validateUpdatedCardWithJoi");
+const validateUpdatedCardWithJoi = require("./joi/validateUpdatedCardWithJoi");
 const validator = undefined || "Joi";
 
 const validateCard = (card) => {
