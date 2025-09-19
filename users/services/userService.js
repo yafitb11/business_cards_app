@@ -2,6 +2,7 @@ const { find, findOneUser, createUser, login, update, changeBizStatus, remove } 
 const { validateRegistration, validateLogin, validateUserUpdate } = require("../validations/userValidationService");
 const normalizeUser = require("../helpers/normalizeUser");
 const { generateUserPassword } = require("../helpers/bcrypt");
+const { handleJoiError } = require("../../utils/errorhandler");
 
 exports.getUsers = async () => {
     try {
@@ -25,7 +26,7 @@ exports.registerUser = async (rawUser) => {
     try {
         const { error } = validateRegistration(rawUser);
         if (error) {
-            return Promise.reject(error);
+            return handleJoiError(error);
         }
         let user = normalizeUser(rawUser);
         user.password = generateUserPassword(user.password);
@@ -42,7 +43,7 @@ exports.userLogin = async (rawUser) => {
     try {
         const { error } = validateLogin(rawUser);
         if (error) {
-            return Promise.reject(error);
+            return handleJoiError(error);
         }
         let user = { ...rawUser };
         user = await login(user);
@@ -56,7 +57,7 @@ exports.updateUser = async (userId, rawUser) => {
     try {
         const { error } = validateUserUpdate(rawUser);
         if (error) {
-            return Promise.reject(error);
+            return handleJoiError(error);
         }
         let user = { ...rawUser };
         user = await update(userId, user);

@@ -1,6 +1,7 @@
 const { find, findMyCards, findOneCard, create, update, like, remove } = require("../models/cardsDataAccessService");
-const validateCard = require("../validations/cardValidationService");
+const { validateCard, validateUpdatedCard } = require("../validations/cardValidationService");
 const normalizeCard = require("../helpers/normalizeCard");
+const { handleJoiError } = require("../../utils/errorhandler");
 
 exports.getCards = async () => {
     try {
@@ -33,7 +34,7 @@ exports.createCard = async (rawCard) => {
     try {
         const { error } = validateCard(rawCard);
         if (error) {
-            return Promise.reject(error);
+            return handleJoiError(error);
         }
 
         let card = await normalizeCard(rawCard);
@@ -46,6 +47,11 @@ exports.createCard = async (rawCard) => {
 
 exports.updateCard = async (cardId, rawCard) => {
     try {
+        const { error } = validateUpdatedCard(rawCard);
+        if (error) {
+            return handleJoiError(error);
+        }
+
         let card = { ...rawCard };
         card = await update(cardId, card);
         return Promise.resolve(card);

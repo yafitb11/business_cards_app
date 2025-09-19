@@ -12,7 +12,6 @@ exports.find = async () => {
             const users = await User.find({}, { __v: 0, password: 0 });
             return Promise.resolve(users);
         } catch (error) {
-            error.status = 404;
             return handleBadRequest("Mongoose", error);
         }
     }
@@ -45,7 +44,6 @@ exports.createUser = async (normalizedUser) => {
             user = lodash.pick(user, ["_id", "name", "email"]);
             return Promise.resolve(user);
         } catch (error) {
-            error.status = 404;
             return handleBadRequest("Mongoose", error);
         }
     }
@@ -65,8 +63,7 @@ exports.login = async (emailAndPassword) => {
             const token = generateAuthToken(user);
             return Promise.resolve(token);
         } catch (error) {
-            error.status = 404;
-            return Promise.reject(error);
+            return handleBadRequest("Mongoose", error);
         }
     }
     return Promise.resolve("login user not in MONGODB");
@@ -80,7 +77,7 @@ exports.update = async (userId, normalizedUser) => {
             return Promise.resolve(`updated user: ${updatedUser}`);
         } catch (error) {
             error.status = 404;
-            return Promise.reject(error);
+            return handleBadRequest("Mongoose", error);
         }
     }
     return Promise.resolve("Not From MONGODB");
@@ -97,7 +94,7 @@ exports.changeBizStatus = async (userId) => {
             return Promise.resolve(`updated user: ${updatedUser}`);
         } catch (error) {
             error.status = 404;
-            return Promise.reject(error);
+            return handleBadRequest("Mongoose", error);
         }
     }
     return Promise.resolve("Not From MONGODB");
@@ -111,7 +108,7 @@ exports.remove = async (userId) => {
             return Promise.resolve(`removed user: ${removedUser}`);
         } catch (error) {
             error.status = 404;
-            return Promise.reject(error);
+            return handleBadRequest("Mongoose", error);
         }
     }
     return Promise.resolve("Not From MONGODB");
