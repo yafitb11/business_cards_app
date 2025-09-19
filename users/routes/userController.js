@@ -9,12 +9,12 @@ router.get("/", auth, async (req, res) => {
     try {
         const { isAdmin } = req.user;
         if (!isAdmin) {
-            errorhandler(res, 403, "Authorization Error: Must be Admin!");
+            return errorhandler(res, 403, "Authorization Error: Must be Admin!");
         }
         const users = await getUsers();
         return res.send(users);
     } catch (error) {
-        errorhandler(res, error.status || 500, error.message);
+        return errorhandler(res, error.status || 500, error.message);
     }
 });
 
@@ -23,12 +23,12 @@ router.get("/:id", auth, async (req, res) => {
         const id = req.params.id;
         const { _id, isAdmin } = req.user;
         if (!isAdmin && _id !== id) {
-            errorhandler(res, 403, "Authorization Error: Must be the registered user or Admin!");
+            return errorhandler(res, 403, "Authorization Error: Must be the registered user or Admin!");
         }
         const user = await getOneUser(id);
         res.send(user);
     } catch (error) {
-        errorhandler(res, error.status || 500, error.message);
+        return errorhandler(res, error.status || 500, error.message);
     }
 });
 
@@ -37,7 +37,7 @@ router.post("/", async (req, res) => {
         const user = await registerUser(req.body);
         return res.send(user);
     } catch (error) {
-        errorhandler(res, error.status || 500, error.message);
+        return errorhandler(res, error.status || 500, error.message);
     }
 });
 
@@ -48,7 +48,7 @@ router.post("/login", async (req, res) => {
         const loginRes = await userLogin(user);
         return res.send(loginRes);
     } catch (error) {
-        errorhandler(res, error.status || 500, error.message);
+        return errorhandler(res, error.status || 500, error.message);
     }
 });
 
@@ -58,12 +58,12 @@ router.put("/:id", auth, async (req, res) => {
         const id = req.params.id;
         const { _id } = req.user;
         if (_id !== id) {
-            errorhandler(res, 403, "Authorization Error: Must be the registered user!");
+            return errorhandler(res, 403, "Authorization Error: Must be the registered user!");
         }
         const user = await updateUser(id, req.body);
         res.send(user);
     } catch (error) {
-        errorhandler(res, error.status || 500, error.message);
+        return errorhandler(res, error.status || 500, error.message);
     }
 });
 
@@ -72,12 +72,12 @@ router.patch("/:id", auth, async (req, res) => {
         const id = req.params.id;
         const { _id } = req.user;
         if (_id !== id) {
-            errorhandler(res, 403, "Authorization Error: Must be the registered user!");
+            return errorhandler(res, 403, "Authorization Error: Must be the registered user!");
         }
         const user = await changeUserBizStatus(id);
         res.send(user);
     } catch (error) {
-        errorhandler(res, error.status || 500, error.message);
+        return errorhandler(res, error.status || 500, error.message);
     }
 });
 
@@ -86,12 +86,12 @@ router.delete("/:id", auth, async (req, res) => {
         const id = req.params.id;
         const { _id, isAdmin } = req.user;
         if (!isAdmin && _id !== id) {
-            errorhandler(res, 403, "Authorization Error: Must be the registered user or Admin!");
+            return errorhandler(res, 403, "Authorization Error: Must be the registered user or Admin!");
         }
         const user = await deleteUser(id);
         res.send(user);
     } catch (error) {
-        errorhandler(res, error.status || 500, error.message);
+        return errorhandler(res, error.status || 500, error.message);
     }
 });
 
