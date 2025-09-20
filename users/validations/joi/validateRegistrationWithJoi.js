@@ -31,6 +31,7 @@ const validateRegistrationWithJoi = (user) => {
         })
     }).unknown(false);
 
+
     return schema.validate(user);
 
 }

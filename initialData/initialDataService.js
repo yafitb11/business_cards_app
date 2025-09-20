@@ -26,6 +26,7 @@ const generateInitialCards = async () => {
     }
 };
 
+
 const generateInitialUsers = async () => {
     const previousUsers = await findPrevUsers();
     if (previousUsers.length == 0) {
