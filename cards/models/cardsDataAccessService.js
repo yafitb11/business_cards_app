@@ -1,6 +1,7 @@
 const Card = require("../models/mongodb/Card");
 const { handleBadRequest } = require("../../utils/errorhandler");
 const config = require("config");
+const { getMyCards } = require("../services/cardService");
 const DB = config.get("DB") || "MONGODB";
 
 exports.find = async () => {
@@ -19,7 +20,9 @@ exports.find = async () => {
 exports.findMyCards = async (userId) => {
     if (DB === "MONGODB") {
         try {
-            return Promise.resolve(`my cards: ${userId}`);
+            const myCards = await Card.find({ user_id: userId });
+            if (myCards.length === 0) { return Promise.resolve("you have no cards, please create some"); }
+            return Promise.resolve(myCards);
         } catch (error) {
             error.status = 404;
             return handleBadRequest("Mongoose", error);

@@ -15,11 +15,11 @@ router.get("/", async (req, res) => {
 });
 
 
-router.get("/my-cards", async (req, res) => {
+router.get("/my-cards", auth, async (req, res) => {
     try {
-        const userId = "1234";
-        const cards = await getMyCards(userId);
-        return res.send(cards);
+        const { _id } = req.user;
+        const myCards = await getMyCards(_id);
+        return res.send(myCards);
     } catch (error) {
         return errorhandler(res, error.status || 500, error.message);
     }
