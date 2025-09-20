@@ -37,7 +37,8 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", auth, async (req, res) => {
     try {
-        const { _id, isBusiness } = auth;
+        const { _id, isBusiness } = req.user;
+        console.log(_id);
         if (!isBusiness) {
             return errorhandler(res, 403, "Authorization Error: Must be a Business user!");
         }
@@ -56,10 +57,10 @@ router.put("/:id", auth, async (req, res) => {
         if (!card1) {
             return errorhandler(res, 404, "Card not found");
         }
-        const userId = card1.user_id;
+        const userId = card1.user_id.toString();
         const { _id } = req.user;
         if (_id !== userId) {
-            return errorhandler(res, 403, "Authorization Error: Must be the registered user!");
+            return errorhandler(res, 403, "Authorization Error: Must be the user who created the card!");
         }
 
         const card = await updateCard(cardId, req.body);
@@ -91,10 +92,10 @@ router.delete("/:id", auth, async (req, res) => {
         if (!card1) {
             return errorhandler(res, 404, "Card not found");
         }
-        const userId = card1.user_id;
+        const userId = card1.user_id.toString();
         const { _id, isAdmin } = req.user;
         if (!isAdmin && _id !== userId) {
-            return errorhandler(res, 403, "Authorization Error: Must be the registered user or Admin!");
+            return errorhandler(res, 403, "Authorization Error: Must be the user who created the card or Admin!");
         }
         const card = await deleteCard(cardId);
         res.send(card);
