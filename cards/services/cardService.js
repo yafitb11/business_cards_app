@@ -30,14 +30,14 @@ exports.getOneCard = async (cardId) => {
     }
 };
 
-exports.createCard = async (rawCard) => {
+exports.createCard = async (rawCard, userId) => {
     try {
         const { error } = validateCard(rawCard);
         if (error) {
             return handleJoiError(error);
         }
 
-        let card = await normalizeCard(rawCard);
+        let card = await normalizeCard(rawCard, userId);
         card = await create(card);
         return Promise.resolve(card);
     } catch (error) {

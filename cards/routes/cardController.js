@@ -35,9 +35,13 @@ router.get("/:id", async (req, res) => {
     }
 });
 
-router.post("/", async (req, res) => {
+router.post("/", auth, async (req, res) => {
     try {
-        const card = await createCard(req.body);
+        const { _id, isBusiness } = auth;
+        if (!isBusiness) {
+            return errorhandler(res, 403, "Authorization Error: Must be a Business user!");
+        }
+        const card = await createCard(req.body, _id);
         return res.status(201).send(card);
     } catch (error) {
         return errorhandler(res, error.status || 500, error.message);
@@ -67,8 +71,8 @@ router.put("/:id", auth, async (req, res) => {
 
 router.patch("/:id", auth, async (req, res) => {
     try {
-        const { _id, isBusiness } = req.user;
-        if (!isBusiness) {
+        const { _id } = req.user;
+        if (!_id) {
             return errorhandler(res, 403, "Authorization Error: Must be a registered user!");
         }
         const cardId = req.params.id;
