@@ -1,9 +1,10 @@
 const joi = require("joi");
+const config = require('../../../config/configInitialData');
 
 const validateRegistrationWithJoi = (user) => {
     const urlRegex = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/;
 
-    const schema = joi.object({
+    const baseSchema = joi.object({
         name: joi.object().keys({
             first: joi.string().min(2).max(256).required(),
             middle: joi.string().min(2).max(256).allow(""),
@@ -29,11 +30,17 @@ const validateRegistrationWithJoi = (user) => {
             houseNumber: joi.number().greater(0).required(),
             zip: joi.number().min(1000).allow(0),
         })
-    }).unknown(false);
+    });
 
+    if (config.hasInitialData) {
+        baseSchema.isAdmin = joi.forbidden();
+    } else {
+        baseSchema.isAdmin = joi.boolean();
+    }
 
+    const schema = joi.object(baseSchema).unknown(false);
     return schema.validate(user);
 
-}
+};
 
 module.exports = validateRegistrationWithJoi;

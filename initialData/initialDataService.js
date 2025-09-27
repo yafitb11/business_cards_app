@@ -5,6 +5,7 @@ const { createUser, find: findPrevUsers } = require("../users/models/usersDataAc
 const { create, find: findPrevCards } = require("../cards/models/cardsDataAccessService");
 const { generateUserPassword } = require("../users/helpers/bcrypt");
 const chalk = require("chalk");
+const config = require('../config/configInitialData');
 
 const generateInitialCards = async () => {
     const previousCards = await findPrevCards();
@@ -30,6 +31,7 @@ const generateInitialCards = async () => {
 const generateInitialUsers = async () => {
     const previousUsers = await findPrevUsers();
     if (previousUsers.length == 0) {
+        config.hasInitialData = false;
         const { users } = data;
         try {
             await Promise.all(users.map(async (user) => {
