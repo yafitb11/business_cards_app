@@ -45,6 +45,7 @@ const generateInitialUsers = async () => {
         }
 
     } else {
+        config.hasInitialData = true;
         console.log(chalk.blue("Users already exist, skipping initial data creation"));
     }
 };
