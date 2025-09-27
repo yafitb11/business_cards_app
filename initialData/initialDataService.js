@@ -40,6 +40,7 @@ const generateInitialUsers = async () => {
                 await createUser(normalizedUser);
             }));
             console.log(chalk.green("Initial users created successfully"));
+            config.hasInitialData = true;
         } catch (error) {
             return console.log(chalk.red(error.message));
         }
