@@ -1,7 +1,6 @@
 const Card = require("../models/mongodb/Card");
 const { handleBadRequest } = require("../../utils/errorhandler");
 const config = require("config");
-const { getMyCards } = require("../services/cardService");
 const DB = config.get("DB") || "MONGODB";
 
 exports.find = async () => {
@@ -16,7 +15,7 @@ exports.find = async () => {
     }
     return Promise.resolve("Cards Not From MONGODB");
 };
-//not modified
+
 exports.findMyCards = async (userId) => {
     if (DB === "MONGODB") {
         try {

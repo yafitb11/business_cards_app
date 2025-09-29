@@ -11,7 +11,7 @@ exports.getCards = async () => {
         return Promise.reject(error);
     }
 };
-//needs modification
+
 exports.getMyCards = async (userId) => {
     try {
         const myCards = await findMyCards(userId);
