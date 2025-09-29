@@ -60,10 +60,10 @@ exports.create = async (normalizedCard) => {
 };
 
 
-exports.update = async (cardId, normalizeCard) => {
+exports.update = async (cardId, normalizedCard) => {
     if (DB === "MONGODB") {
         try {
-            const updatedCard = await Card.findByIdAndUpdate(cardId, normalizeCard, { new: true });
+            const updatedCard = await Card.findByIdAndUpdate(cardId, normalizedCard, { new: true });
             if (!updatedCard) { throw new Error("Could not update this card because a card with this ID couldn't be found in database"); }
             return Promise.resolve(`updated card: ${updatedCard}`);
         } catch (error) {
@@ -92,15 +92,27 @@ exports.like = async (cardId, userId) => {
     return Promise.resolve("Card Not From MONGODB");
 };
 
-exports.remove = async (cardId, user) => {
+
+exports.changeBizNumber = async (cardId, normalizedBizNumber) => {
+    if (DB === "MONGODB") {
+        try {
+            const updatedCard = await Card.findByIdAndUpdate(cardId, normalizedBizNumber, { new: true });
+            if (!updatedCard) { throw new Error("Could not update this card because a card with this ID couldn't be found in database"); }
+            return Promise.resolve(`updated card: ${updatedCard}`);
+        } catch (error) {
+            error.status = 404;
+            return handleBadRequest("Mongoose", error);
+        }
+    }
+    return Promise.resolve("Card Not From MONGODB");
+};
+
+
+exports.remove = async (cardId) => {
     if (DB === "MONGODB") {
         try {
             let removedCard = await Card.findById(cardId);
             if (!removedCard) { throw new Error("Could not delete this card because a card with this ID couldn't be found in database"); }
-
-            /*    if (!user.isAdmin && user._id !== removedCard.user_id) throw new Error(
-                    "Authorization Error: Only the user who created the business card or admin can delete this card"
-                ); */
 
             removedCard = await Card.findByIdAndDelete(cardId);
             return Promise.resolve(`removed card: ${removedCard}`);
