@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const chalk = require("chalk");
-const { getCards, getMyCards, getOneCard, createCard, updateCard, likeCard, deleteCard } = require("../services/cardService");
+const { getCards, getMyCards, getOneCard, createCard, updateCard, likeCard, deleteCard, changeCardBizNumber } = require("../services/cardService");
 const { errorhandler } = require("../../utils/errorhandler");
 const { auth } = require("../../auth/authService");
 
@@ -79,6 +79,22 @@ router.patch("/:id", auth, async (req, res) => {
         const cardId = req.params.id;
         const card = await likeCard(cardId, _id);
         res.send(card);
+    } catch (error) {
+        return errorhandler(res, error.status || 500, error.message);
+    }
+});
+
+
+router.patch("/:id", auth, async (req, res) => {
+    try {
+        const { isAdmin } = req.user;
+        if (!isAdmin) {
+            return errorhandler(res, 403, "Authorization Error: Must be the Admin!");
+        }
+        const id = req.params.id;
+        const newBizNumber = req.body;
+        const user = await changeCardBizNumber(id, newBizNumber);
+        res.send(user);
     } catch (error) {
         return errorhandler(res, error.status || 500, error.message);
     }

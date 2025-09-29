@@ -1,6 +1,8 @@
 const validateCardWithJoi = require("./joi/validateCardWithJoi");
 const validateUpdatedCardWithJoi = require("./joi/validateUpdatedCardWithJoi");
-const validator = undefined || "Joi";
+const validateNewBizNumberWithJoi = require("./joi/validateNewBizNumberWithJoi");
+const config = require("config");
+const validator = config.get("VALIDATOR") || "Joi";
 
 const validateCard = (card) => {
     if (validator === "Joi") {
@@ -8,11 +10,17 @@ const validateCard = (card) => {
     }
 }
 
-
 const validateUpdatedCard = (card) => {
     if (validator === "Joi") {
         return validateUpdatedCardWithJoi(card);
     }
 }
 
-module.exports = { validateCard, validateUpdatedCard };
+const validateNewBizNumber = (newBizNumber) => {
+    if (validator === "Joi") {
+        return validateNewBizNumberWithJoi(card);
+    }
+}
+
+
+module.exports = { validateCard, validateUpdatedCard, validateNewBizNumber };

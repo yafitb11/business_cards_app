@@ -1,5 +1,5 @@
-const { find, findMyCards, findOneCard, create, update, like, remove } = require("../models/cardsDataAccessService");
-const { validateCard, validateUpdatedCard } = require("../validations/cardValidationService");
+const { find, findMyCards, findOneCard, create, update, like, remove, changeBizNumber } = require("../models/cardsDataAccessService");
+const { validateCard, validateUpdatedCard, validateNewBizNumber } = require("../validations/cardValidationService");
 const normalizeCard = require("../helpers/normalizeCard");
 const { handleJoiError } = require("../../utils/errorhandler");
 
@@ -69,6 +69,19 @@ exports.likeCard = async (cardId, userId) => {
     }
 };
 
+
+exports.changeCardBizNumber = async (cardId, newBizNumber) => {
+    try {
+        const { error } = validateNewBizNumber(newBizNumber);
+        if (error) {
+            return handleJoiError(error);
+        }
+        const card = await changeBizNumber(cardId, newBizNumber);
+        return Promise.resolve(card);
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
 
 exports.deleteCard = async (cardId) => {
     try {

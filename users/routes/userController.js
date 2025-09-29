@@ -81,6 +81,7 @@ router.patch("/:id", auth, async (req, res) => {
     }
 });
 
+
 router.delete("/:id", auth, async (req, res) => {
     try {
         const id = req.params.id;
