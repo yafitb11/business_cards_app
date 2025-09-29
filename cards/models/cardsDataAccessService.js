@@ -96,7 +96,7 @@ exports.like = async (cardId, userId) => {
 exports.changeBizNumber = async (cardId, normalizedBizNumber) => {
     if (DB === "MONGODB") {
         try {
-            const updatedCard = await Card.findByIdAndUpdate(cardId, normalizedBizNumber, { new: true });
+            const updatedCard = await Card.findByIdAndUpdate(cardId, { bizNumber: normalizedBizNumber }, { new: true });
             if (!updatedCard) { throw new Error("Could not update this card because a card with this ID couldn't be found in database"); }
             return Promise.resolve(`updated card: ${updatedCard}`);
         } catch (error) {

@@ -78,7 +78,8 @@ exports.changeCardBizNumber = async (cardId, newBizNumber) => {
         if (error) {
             return handleJoiError(error);
         }
-        const bizNumber = await normalizeNewBizNumber(newBizNumber);
+        let bizNumber = newBizNumber.bizNumber;
+        bizNumber = await normalizeNewBizNumber(bizNumber);
         const card = await changeBizNumber(cardId, bizNumber);
         return Promise.resolve(card);
     } catch (error) {

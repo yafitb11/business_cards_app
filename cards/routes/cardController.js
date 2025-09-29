@@ -85,7 +85,7 @@ router.patch("/:id", auth, async (req, res) => {
 });
 
 
-router.patch("/:id", auth, async (req, res) => {
+router.patch("/changebiznum/:id", auth, async (req, res) => {
     try {
         const { isAdmin } = req.user;
         if (!isAdmin) {

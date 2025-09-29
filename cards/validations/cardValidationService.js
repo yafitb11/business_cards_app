@@ -18,7 +18,7 @@ const validateUpdatedCard = (card) => {
 
 const validateNewBizNumber = (newBizNumber) => {
     if (validator === "Joi") {
-        return validateNewBizNumberWithJoi(card);
+        return validateNewBizNumberWithJoi(newBizNumber);
     }
 }
 
