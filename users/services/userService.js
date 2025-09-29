@@ -1,6 +1,7 @@
 const { find, findOneUser, createUser, login, update, changeBizStatus, remove } = require("../models/usersDataAccessService");
 const { validateRegistration, validateLogin, validateUserUpdate } = require("../validations/userValidationService");
 const normalizeUser = require("../helpers/normalizeUser");
+const normalizeUpdatedUser = require("../helpers/normlizeUpdatedUser");
 const { generateUserPassword } = require("../helpers/bcrypt");
 const { handleJoiError } = require("../../utils/errorhandler");
 
@@ -59,7 +60,7 @@ exports.updateUser = async (userId, rawUser) => {
         if (error) {
             return handleJoiError(error);
         }
-        let user = { ...rawUser };
+        let user = normalizeUpdatedUser(rawUser);
         user = await update(userId, user);
         return Promise.resolve(user);
     } catch (error) {
