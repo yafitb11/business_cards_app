@@ -1,4 +1,4 @@
-const normalizeUpdatedCard = async (updatedCard) => {
+const normalizeUpdatedCard = (updatedCard) => {
     const normalizedCard = { ...updatedCard };
 
     if (updatedCard.image) {
