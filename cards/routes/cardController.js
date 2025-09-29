@@ -38,7 +38,6 @@ router.get("/:id", async (req, res) => {
 router.post("/", auth, async (req, res) => {
     try {
         const { _id, isBusiness } = req.user;
-        console.log(_id);
         if (!isBusiness) {
             return errorhandler(res, 403, "Authorization Error: Must be a Business user!");
         }
