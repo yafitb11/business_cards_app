@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 
-const logsDir = path.join(__dirname, "../logs");
+const logsDir = path.join(process.cwd(), "logs");
 if (!fs.existsSync(logsDir)) fs.mkdirSync(logsDir);
 
 const getLogFilePath = () => path.join(logsDir, new Date().toISOString().slice(0, 10) + ".log");
