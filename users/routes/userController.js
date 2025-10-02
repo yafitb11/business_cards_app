@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const chalk = require("chalk");
 const { getUsers, getOneUser, registerUser, updateUser, changeUserBizStatus, deleteUser, userLogin } = require("../services/userService");
 const { errorhandler } = require("../../utils/errorhandler");
 const { auth } = require("../../auth/authService");

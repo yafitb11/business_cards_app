@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const chalk = require("chalk");
 const { getCards, getMyCards, getOneCard, createCard, updateCard, likeCard, deleteCard, changeCardBizNumber } = require("../services/cardService");
 const { errorhandler } = require("../../utils/errorhandler");
 const { auth } = require("../../auth/authService");
