@@ -20,7 +20,7 @@ This project includes **user authentication, role-based authorization, and busin
 - **Business Number Control**: Admin can change business numbers (ensures uniqueness) – *bonus feature*  
 - **Environment Config**: Managed with the **config** package  
 - **Supports two environments**:  
-  - **Development** → connects to local/campus MongoDB  
+  - **Development** → connects to MongoDB local compass  
   - **Production** → connects to MongoDB Atlas  
 
 ### 📌 Note:
@@ -98,7 +98,7 @@ cd <repository-folder>
 npm install
 ```
 
-### Run in Development (local MongoDB / campus, with Nodemon auto-restart)
+### Run in Development (local MongoDB compass, with Nodemon auto-restart)
 ```bash
 npm run dev
 ```
